@@ -1,9 +1,10 @@
-import { Div, Container, FormDiv, ResultDiv } from "./style"
+import { Div, Container, FormDiv, InputDiv } from "./style"
 import Logo from "../../assets/logo.png"
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from "react";
+import { Result } from "./result";
 
 
 
@@ -132,31 +133,31 @@ export const Home = () => {
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div>
                             <label>Origem:</label>
-                            <select name="origem" onChange={(e) => setSource(e.target.value)}>
+                            <select name="origem" data-testid="origem" onChange={(e) => setSource(e.target.value)}>
                                 <option value="011">011</option>
                                 <option value="016">016</option>
                                 <option value="017">017</option>
                                 <option value="018">018</option>
                             </select>
                             <label>Destino:</label>
-                            <select name="destino" onChange={(e) => setDestiny(e.target.value)}>
+                            <select name="destino" data-testid="destino" onChange={(e) => setDestiny(e.target.value)}>
                                 <option value="016">016</option>
                                 <option value="011">011</option>
                                 <option value="017">017</option>
                                 <option value="018">018</option>
                             </select>
                         </div>
-                        <div>
+                        <InputDiv>
                             <label>Tempo:</label>
                             <input 
                                 placeholder="Tempo em Minutos" 
                                 {...register("tempo")}
                                 onChange={(e) => setTime(e.target.value)}/>
                             <span>{errors.tempo?.message}</span>
-                        </div>
+                        </InputDiv>
                         <div>
                             <label>Plano FaleMais:</label>
-                            <select name="plano" onChange={(e) => setPlan(e.target.value)}>
+                            <select name="plano" data-testid="plano" onChange={(e) => setPlan(e.target.value)}>
                                 <option value="FaleMais30">FaleMais30</option>
                                 <option value="FaleMais60">FaleMais60</option>
                                 <option value="FaleMais120">FaleMais120</option>
@@ -166,13 +167,7 @@ export const Home = () => {
                     </form>
                 </FormDiv>
                 { render &&
-                <ResultDiv>
-                    <p>Você irá gastar:</p>
-                    <div>
-                        <p>Com FaleMais: R$ {totalWith.toFixed(2)}</p>
-                        <p>Sem FaleMais: R$ {totalWithout.toFixed(2)}</p>
-                    </div>
-                </ResultDiv>
+                <Result totalWith={totalWith} totalWithout={totalWithout}/>
                 }
             </Container>
         </Div>
